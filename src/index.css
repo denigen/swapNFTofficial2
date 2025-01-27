@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'PressStart2P';
+  src: url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    /* Classic NES-inspired color palette */
+    --color-bg: #0f0f1b;
+    --color-primary: #00ff00;
+    --color-secondary: #ff00ff;
+    --color-accent: #ffff00;
+    --color-text: #ffffff;
+    --color-border: #4444ff;
+    --color-button: #222234;
+    --color-button-hover: #333356;
+    --color-disabled: #666677;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    image-rendering: pixelated;
+    font-family: 'PressStart2P', monospace;
+  }
+}
+
+@layer components {
+  .retro-container {
+    @apply relative;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+      z-index: 10;
+    }
+  }
+
+  .retro-button {
+    @apply px-4 py-2 border-2 font-pixel text-sm transition-all duration-100 transform;
+    image-rendering: pixelated;
+    border-style: solid;
+    border-color: #fff #666 #666 #fff;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+    
+    &:hover {
+      @apply translate-y-[1px] translate-x-[1px];
+      box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+    }
+    
+    &:active {
+      @apply translate-y-[2px] translate-x-[2px];
+      box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5);
+    }
+
+    &:disabled {
+      @apply bg-disabled text-gray-400 cursor-not-allowed;
+      border-color: #888 #444 #444 #888;
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  .retro-input {
+    @apply px-3 py-2 border-2 bg-black text-green-400 font-pixel;
+    border-style: solid;
+    border-color: #666 #fff #fff #666;
+    
+    &:focus {
+      @apply outline-none border-primary;
+      box-shadow: 0 0 0 2px rgba(0, 255, 0, 0.2);
+    }
+  }
+
+  .retro-card {
+    @apply bg-black border-2 p-4;
+    border-style: solid;
+    border-color: #fff #666 #666 #fff;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
+  }
+
+  .retro-text {
+    @apply font-pixel text-green-400;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+  }
+
+  .pixel-corners {
+    clip-path: polygon(
+      0 4px,
+      4px 4px,
+      4px 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 4px,
+      100% 4px,
+      100% calc(100% - 4px),
+      calc(100% - 4px) calc(100% - 4px),
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px calc(100% - 4px),
+      0 calc(100% - 4px)
+    );
+  }
+}
+
+/* Scanline effect */
+.scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0, 0, 0, 0.1) 50%
+  );
+  background-size: 100% 4px;
+}
+
+/* CRT flicker animation */
+@keyframes flicker {
+  0% { opacity: 0.97; }
+  5% { opacity: 0.95; }
+  10% { opacity: 0.9; }
+  15% { opacity: 0.95; }
+  20% { opacity: 0.98; }
+  25% { opacity: 0.95; }
+  30% { opacity: 0.9; }
+  35% { opacity: 0.95; }
+  40% { opacity: 0.98; }
+  45% { opacity: 0.95; }
+  50% { opacity: 0.9; }
+  55% { opacity: 0.95; }
+  60% { opacity: 0.98; }
+  65% { opacity: 0.95; }
+  70% { opacity: 0.9; }
+  75% { opacity: 0.95; }
+  80% { opacity: 0.98; }
+  85% { opacity: 0.95; }
+  90% { opacity: 0.9; }
+  95% { opacity: 0.95; }
+  100% { opacity: 0.98; }
+}
+
+.crt-effect {
+  animation: flicker 0.15s infinite;
+}
